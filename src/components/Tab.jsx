@@ -7,22 +7,25 @@ const Tab = (props) => {
         { tab3: "Tab Three is Showing" },
     ])
 
-    const [currnetInfo, setCurrentInfo] = useState("")
+    const [currentInfo, setCurrentInfo] = useState("")
 
-    const handleClick = (e) => {
-
-        if (e.target.name === "tab1") {
-
-            console.log(tabInfo[0].tab1);
+    const handleClick = (idx) => {
+        // in order to pass in idx we'll use onClick={ () => handleClick(idx) }
+        if (idx === 0) {
             setCurrentInfo(tabInfo[0].tab1);
-        } else if (e.target.name === "tab2") {
-            console.log(tabInfo[1].tab2);
+        } else if (idx === 1) {
             setCurrentInfo(tabInfo[1].tab2);
         } else {
-            console.log(tabInfo[2].tab3);
             setCurrentInfo(tabInfo[2].tab3);
         }
 
+        // if (e.target.key === "tab1") {
+        //     setCurrentInfo(tabInfo[0].tab1);
+        // } else if (e.target.name === "tab2") {
+        //     setCurrentInfo(tabInfo[1].tab2);
+        // } else {
+        //     setCurrentInfo(tabInfo[2].tab3);
+        // }
     }
 
     return (
@@ -30,12 +33,16 @@ const Tab = (props) => {
             {/* {JSON.stringify(tabInfo)} */}
             <div className='d-flex'>
                 {
-                    tabInfo.map((tab, i) => {
+                    tabInfo.map((tab, idx) => {
                         return (
                             <button
+                                // wont show on html
+                                // this for react to track tag
+                                key={idx}
+                                // this will return [element]
                                 name={Object.keys(tab)}
-                                className='btn btn-success m-5'
-                                onClick={handleClick}
+                                className='btn btn-success m-5 col'
+                                onClick={() => handleClick(idx)}
                             >
                                 {Object.keys(tab)}
                             </button>
@@ -44,7 +51,7 @@ const Tab = (props) => {
                 }
             </div>
             <fieldset className='border'>
-                <p>{currnetInfo}</p>
+                <p>{currentInfo}</p>
 
             </fieldset>
         </div>
